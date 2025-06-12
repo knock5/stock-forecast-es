@@ -1,11 +1,15 @@
 @extends('template.appuser')
 @section('content')
+@section('title', 'Halaman Kelola Stok Barang')
 <div class="row">
     <div class="col-12 d-flex align-items-stretch">
         <div class="card w-100">
             <div class="card-body p-4">
             <h3 class="card-title text-center fw-semibold mb-4"> Data Stok Barang</h3>
+            @if (Auth::user()->level == 'admin')
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#tambah"><i class="fas fa-plus"></i> Tambah Barang</button>
+            @else
+            @endif
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-hover table-bordered border-primary">
                     <thead>
@@ -13,7 +17,10 @@
                         <th>Nama Barang</th>
                         <th>Stok</th>
                         <th>Satuan</th>
+                        @if (Auth::user()->level == 'admin')
                         <th>Aksi</th>
+                        @else
+                        @endif
                     </thead>
                     <tbody>
                         @foreach($gudang as $g)
@@ -22,8 +29,11 @@
                             <td>{{ $g->NAMA }}</td>
                             <td>{{ $g->JUMLAH ?? 0 }}</td>
                             <td>{{ $g->SATUAN }}</td>
+                            @if (Auth::user()->level == 'admin')
                             <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit{{ $g->ID_BARANG }}"><i class="fas fa-edit"></i></button>
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#hapus{{ $g->ID_BARANG }}"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                            @else
+                            @endif
                         </tr>
 
                         <div class="modal fade" id="edit{{ $g->ID_BARANG }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,8 +73,9 @@
                         <div class="modal fade" id="hapus{{ $g->ID_BARANG }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                            <form action="{{url('dataset/ubah/'.$g->ID_BARANG)}}" method="POST"  enctype="multipart/form-data">
+                            <form action="{{url('dataset/hapus/'.$g->ID_BARANG)}}" method="POST"  enctype="multipart/form-data">
                             @csrf
+                            @method('DELETE')
                                 <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Form Hapus Barang</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -73,7 +84,7 @@
                                    <p>Apakah anda ingin menghapus barang <strong>{{ $g->NAMA }}</strong> ini ?</p>
                                 </div>
                                 <div class="modal-footer">
-                                <button type="submit" class="btn btn-outline-primary">Simpan</button>
+                                <button type="submit" class="btn btn-outline-primary">Hapus</button>
                                 </div>
                             </form>
                             </div>

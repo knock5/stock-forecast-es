@@ -16,6 +16,19 @@ class masukController extends Controller
     }
     public function tambah(Request $request)
     {
+        $request->validate([
+            'barang' => 'required', // pastikan ID barang ada di tabel gudang
+            'tanggal' => 'required',
+            'jumlah' => 'required|integer|min:1',
+        ], [
+            'barang.required' => 'Barang harus dipilih.',
+         
+            'tanggal.required' => 'Tanggal masuk harus diisi.',
+            
+            'jumlah.required' => 'Jumlah masuk harus diisi.',
+            'jumlah.integer' => 'Jumlah masuk harus berupa angka.',
+            'jumlah.min' => 'Jumlah masuk minimal 1.',
+        ]);
         $masuk = new masuk;
         $masuk->ID_BARANG= $request->barang;
         $masuk->TANGGAL_MASUK = $request->tanggal;
@@ -31,6 +44,19 @@ class masukController extends Controller
     }
     public function ubah(Request $request, String $id)
     {
+        $request->validate([
+            'barang' => 'required', // pastikan ID barang ada di tabel gudang
+            'tanggal' => 'required',
+            'jumlah' => 'required|integer|min:1',
+        ], [
+            'barang.required' => 'Barang harus dipilih.',
+         
+            'tanggal.required' => 'Tanggal masuk harus diisi.',
+            
+            'jumlah.required' => 'Jumlah masuk harus diisi.',
+            'jumlah.integer' => 'Jumlah masuk harus berupa angka.',
+            'jumlah.min' => 'Jumlah masuk minimal 1.',
+        ]);
         $masuk = masuk::find($id);
 
         $jumlahLama = $masuk->JUMLAH_MASUK;

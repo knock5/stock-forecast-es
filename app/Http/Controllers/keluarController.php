@@ -16,6 +16,18 @@ class keluarController extends Controller
     }
     public function tambah(Request $request)
     {
+        $request->validate([
+            'barang' => 'required', // pastikan ID barang ada di tabel gudang
+            'tanggal' => 'required',
+            'jumlah' => 'required|integer|min:1',
+           
+        ], [
+            'barang.required' => 'Barang harus dipilih.',
+            'tanggal.required' => 'Tanggal keluar harus diisi.',
+            'tanggal.date' => 'Format tanggal tidak valid.',
+            'jumlah.integer' => 'Jumlah keluar harus berupa angka.',
+            'jumlah.min' => 'Jumlah keluar minimal 1.',
+        ]);
         $gudang = gudang::find($request->barang);
         if (!$gudang) {
             return redirect()->back()->with('error', 'Barang tidak ditemukan');
@@ -42,6 +54,18 @@ class keluarController extends Controller
     }
     public function ubah(Request $request, String $id)
 {
+    $request->validate([
+        'barang' => 'required', // pastikan ID barang ada di tabel gudang
+        'tanggal' => 'required',
+        'jumlah' => 'required|integer|min:1',
+       
+    ], [
+        'barang.required' => 'Barang harus dipilih.',
+        'tanggal.required' => 'Tanggal keluar harus diisi.',
+        'tanggal.date' => 'Format tanggal tidak valid.',
+        'jumlah.integer' => 'Jumlah keluar harus berupa angka.',
+        'jumlah.min' => 'Jumlah keluar minimal 1.',
+    ]);
     $keluar = keluar::find($id);
     if (!$keluar) {
         return redirect()->back()->with('error', 'Data tidak ditemukan');

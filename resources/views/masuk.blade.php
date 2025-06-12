@@ -1,5 +1,7 @@
 @extends('template.appuser')
 @section('content')
+@section('title', 'Halaman Data Masuk Barang')
+
 @php
 use Carbon\Carbon;
 Carbon::setLocale('id');
@@ -17,7 +19,10 @@ Carbon::setLocale('id');
                         <th>Nama Barang</th>
                         <th>Tanggal Masuk</th>
                         <th>Jumlah Masuk</th>
+                        @if (Auth::user()->level == 'admin')
                         <th>Aksi</th>
+                        @else
+                        @endif
                     </thead>
                     <tbody>
                         @foreach($masuk as $g)
@@ -26,8 +31,11 @@ Carbon::setLocale('id');
                             <td>{{ $g->gudang->NAMA}}</td>
                             <td>{{ \Carbon\Carbon::parse($g->TANGGAL_MASUK)->translatedFormat('d F Y, H:i') }}</td>
                             <td>{{ $g->JUMLAH_MASUK }} {{$g->gudang->SATUAN}}</td>
+                            @if (Auth::user()->level == 'admin')
                             <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit{{ $g->ID_MASUK}}"><i class="fas fa-edit"></i></button>
                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#hapus{{ $g->ID_MASUK }}"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                            @else
+                            @endif
                         </tr>
 
                         <div class="modal fade" id="edit{{ $g->ID_MASUK}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,7 +97,7 @@ Carbon::setLocale('id');
                                    <p>Apakah anda ingin menghapus riwayat masuk barang pada tanggal <strong>{{ $g->TANGGAL_MASUK }}</strong> ini ?</p>
                                 </div>
                                 <div class="modal-footer">
-                                <button type="submit" class="btn btn-outline-primary">Simpan</button>
+                                <button type="submit" class="btn btn-outline-primary">Hapus</button>
                                 </div>
                             </form>
                             </div>

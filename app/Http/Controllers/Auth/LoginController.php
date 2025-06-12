@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Symfony\Component\HttpFoundation\Request;
+use App\Providers\RouteServiceProvider;
 class LoginController extends Controller
 {
     /*
@@ -25,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -36,5 +37,15 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+    protected function authenticated(Request $request, $user)
+    {
+        if($user->level == 'admin'){
+            return redirect('/?bulan=04&tahun=2025');
+        }elseif($user->level == 'user'){
+            return redirect('/?bulan=04&tahun=2025');
+        } else {
+            return redirect('/login');
+        }
     }
 }

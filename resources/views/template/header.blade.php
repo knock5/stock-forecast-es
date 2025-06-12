@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BUBIN CATERING</title>
+  <title>@yield('title')</title>
   <!-- <link rel="shortcut icon" type="image/png" href="{{asset('user5/images/logo.png')}}" /> -->
   <link rel="stylesheet" href="{{asset('user5/css/styles.min.css')}}" />
   <!-- <link href="assets/js/leaflet-routing-machine/dist/leaflet-routing-machine.css" rel="stylesheet"> -->
@@ -37,13 +37,14 @@
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
           <ul id="sidebarnav">
   <li class="sidebar-item">
-    <a class="sidebar-link" href="{{url('/')}}" aria-expanded="false">
+    <a class="sidebar-link" href="{{url('/?bulan=04&tahun=2025')}}" aria-expanded="false">
       <span>
         <i class="ti ti-layout-dashboard"></i>
       </span>
       <span class="hide-menu">Dashboard</span>
     </a>
   </li>
+  
   <li class="sidebar-item">
     <a class="sidebar-link" href="{{url('/dataset')}}" aria-expanded="false">
       <span>
@@ -69,6 +70,7 @@
       <span class="hide-menu">Data Keluar Barang</span>
     </a>
   </li>
+  @if (Auth::user()->level == 'admin')
   <li class="sidebar-item">
     <a class="sidebar-link" href="{{url('/prediksi')}}" aria-expanded="false">
       <span>
@@ -85,13 +87,19 @@
       <span class="hide-menu">Data Akun</span>
     </a>
   </li>
+  @else
+  @endif
   <li class="sidebar-item">
-    <a class="sidebar-link" href="{{url('/akun')}}" aria-expanded="false">
+    <a class="sidebar-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();" aria-expanded="false">
       <span>
       <i class="ti ti-login"></i>
       </span>
       <span class="hide-menu">Logout</span>
     </a>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+            </form>
   </li>
   
  
