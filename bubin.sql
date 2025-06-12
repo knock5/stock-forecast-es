@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Jun 2025 pada 03.26
+-- Waktu pembuatan: 12 Jun 2025 pada 07.57
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 8.1.10
 
@@ -20,26 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `bubin`
 --
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `akun`
---
-
-CREATE TABLE `akun` (
-  `ID` int(11) NOT NULL,
-  `EMAIL` varchar(100) DEFAULT NULL,
-  `PASSWORD` varchar(100) DEFAULT NULL,
-  `AKSES` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `akun`
---
-
-INSERT INTO `akun` (`ID`, `EMAIL`, `PASSWORD`, `AKSES`) VALUES
-(1, 'h@gamil.com', '12345678', 'p');
 
 -- --------------------------------------------------------
 
@@ -155,8 +135,7 @@ INSERT INTO `gudang` (`ID_BARANG`, `id_user`, `NAMA`, `JUMLAH`, `SATUAN`) VALUES
 (179, 1, 'minyak 950 ml', '28', 'botol'),
 (180, 1, 'minyak 2 liter', '0', 'bks'),
 (181, 1, 'tepung ketan', '2', 'px'),
-(182, 1, 'cuka', '1', 'bendel'),
-(184, 1, 'percobaan1', '17', 'pcs');
+(182, 1, 'cuka', '1', 'bendel');
 
 -- --------------------------------------------------------
 
@@ -780,8 +759,7 @@ INSERT INTO `masuk` (`ID_MASUK`, `ID_BARANG`, `TANGGAL_MASUK`, `JUMLAH_MASUK`) V
 (1004, 182, '2025-05-06 00:00:00', '2'),
 (1005, 179, '2025-05-07 00:00:00', '36'),
 (1006, 107, '2025-05-07 00:00:00', '253'),
-(1007, 130, '2025-05-06 00:00:00', '5'),
-(1010, 184, '2025-06-13 13:09:00', '15');
+(1007, 130, '2025-05-06 00:00:00', '5');
 
 -- --------------------------------------------------------
 
@@ -790,25 +768,26 @@ INSERT INTO `masuk` (`ID_MASUK`, `ID_BARANG`, `TANGGAL_MASUK`, `JUMLAH_MASUK`) V
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `level` enum('admin','user') COLLATE utf8mb4_unicode_ci DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`, `level`) VALUES
+(1, 'admin', 'admin@gmail.com', '$2y$10$2JFZt2vq6rI.MjxFPsVOru6r/39wrPNyeG1LRvQM/BFATCl7lxjZm', '2025-06-11 20:53:01', '2025-06-11 20:53:01', 'admin'),
+(2, 'user', 'user@gmail.com', '$2y$10$IBg9zf.lah72gvx/6tKsFuhdyLgyi/b8MfaFdNxjipQH1pVq1Mj.K', NULL, NULL, 'user');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indeks untuk tabel `akun`
---
-ALTER TABLE `akun`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indeks untuk tabel `gudang`
@@ -843,16 +822,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `akun`
---
-ALTER TABLE `akun`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT untuk tabel `gudang`
 --
 ALTER TABLE `gudang`
-  MODIFY `ID_BARANG` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
+  MODIFY `ID_BARANG` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 
 --
 -- AUTO_INCREMENT untuk tabel `keluar`
@@ -870,17 +843,11 @@ ALTER TABLE `masuk`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
-
---
--- Ketidakleluasaan untuk tabel `gudang`
---
-ALTER TABLE `gudang`
-  ADD CONSTRAINT `wfgdfgfdgg` FOREIGN KEY (`id_user`) REFERENCES `akun` (`ID`);
 
 --
 -- Ketidakleluasaan untuk tabel `keluar`
