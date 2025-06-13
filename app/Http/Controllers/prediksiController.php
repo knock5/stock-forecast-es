@@ -80,7 +80,7 @@ class prediksiController extends Controller
             'kategori'     => $barang->NAMA,
             'satuan'       => $barang->SATUAN,
             'alpha'        => $alpha,
-            'forecast'     => round($forecast, 2),
+            'forecast'     => round($forecast, 1),
             'next_date'    => $nextDate,
             'data'         => $data,
             'forecastData' => $forecastData

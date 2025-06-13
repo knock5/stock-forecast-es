@@ -16,7 +16,7 @@
 
     $values = [
         $lastData->JUMLAH_KELUAR,
-        round($forecast, 2)
+        round($forecast, 1)
     ];
 @endphp
 
@@ -29,7 +29,7 @@
                 <div class="mb-3">
                     <strong>Alpha (α):</strong> {{ $alpha }} <br>
                     <strong>Tanggal Prediksi:</strong> {{ \Carbon\Carbon::parse($next_date)->translatedFormat('d F Y') }}<br>
-                    <strong>Hasil Prediksi Adalah:</strong> {{ $forecast }} {{ $satuan }}
+                    <strong>Hasil Prediksi Adalah:</strong> {{ number_format($forecast, 1) }}{{ $satuan }}
                 </div>
 
                 <!-- Grafik 2 Titik -->
