@@ -10,7 +10,7 @@ Carbon::setLocale('id');
         <div class="card w-100">
             <div class="card-body p-4">
             <h3 class="card-title text-center fw-semibold mb-4"> Data Keluar Barang</h3>
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#tambah"><i class="fas fa-plus"></i> Tambah Barang Masuk</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#tambah"><i class="fas fa-plus"></i> Tambah Barang Keluar</button>
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-hover table-bordered border-primary">
                     <thead>
